@@ -15,7 +15,7 @@
 }
 
 /*
- * Approximates the blurred #7844ff polygon sitting behind the section in
+ * Approximates the blurred accent polygon sitting behind the section in
  * Figma. A gradient rather than the exported SVG — cheaper to composite and
  * it scales to any viewport, which the fixed-size export would not.
  */
