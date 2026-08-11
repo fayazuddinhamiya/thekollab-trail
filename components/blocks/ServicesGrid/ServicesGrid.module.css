@@ -43,8 +43,13 @@
  * Header
  * ------------------------------------------------------------------ */
 
+/*
+ * Wider than the measured 518px text block. The substitute display face is
+ * proportionally wider than the file's condensed original, so the heading
+ * needs more room to hold the same two lines it holds in Figma.
+ */
 .servicesGrid__header {
-  max-inline-size: var(--layout-intro-max-width);
+  max-inline-size: 46rem;
   margin-inline: auto;
   margin-block-end: var(--space-4xl);
   text-align: center;
@@ -74,6 +79,8 @@
 }
 
 .servicesGrid__intro {
+  max-inline-size: var(--layout-intro-max-width);
+  margin-inline: auto;
   color: var(--text-secondary);
   font-family: var(--font-body);
   font-size: var(--font-size-body);
@@ -104,9 +111,7 @@
   border: var(--border-width) solid transparent;
   border-block-end-color: var(--border-default);
   border-radius: var(--radius-xl);
-  transition:
-    border-color var(--duration-medium) var(--ease-standard),
-    background-color var(--duration-medium) var(--ease-standard);
+  transition: border-color var(--duration-medium) var(--ease-standard);
 }
 
 /* Last card never carries a bottom divider, at any column count. */
@@ -123,13 +128,11 @@
 @media (hover: hover) {
   .servicesGrid__card:hover {
     border-color: var(--border-default);
-    background-color: var(--surface-raised);
   }
 }
 
 .servicesGrid__card:focus-within {
   border-color: var(--border-default);
-  background-color: var(--surface-raised);
 }
 
 @media (min-width: 48rem) {
@@ -231,7 +234,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  block-size: clamp(9rem, 20vw, 13.75rem);
+  block-size: clamp(10rem, 22vw, 17rem);
   margin-block: var(--space-lg);
 }
 
@@ -240,6 +243,15 @@
   max-inline-size: 100%;
   block-size: 100%;
   object-fit: contain;
+
+  /*
+   * The halftone artwork exports from Figma already flattened onto the
+   * section background — every pixel is opaque and the backing measures
+   * exactly rgb(5 6 8), the value behind --color-ink. So it composites
+   * seamlessly with no blend mode, provided whatever sits behind it stays
+   * that colour. That is why the card's hover state changes only its
+   * border and never its fill.
+   */
 }
 
 /* ---------------------------------------------------------------------
