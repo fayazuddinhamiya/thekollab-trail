@@ -97,7 +97,12 @@ export default function ServicesGrid({
           ))}
         </ul>
 
-        {cta ? (
+        {/*
+          Payload always returns a group as an object, so an empty CTA
+          arrives as { label: "", href: "" } rather than undefined. Both
+          fields have to be populated for it to render.
+        */}
+        {cta?.label && cta?.href ? (
           <div className={styles.servicesGrid__cta}>
             <a className={styles.servicesGrid__ctaLink} href={cta.href}>
               {cta.label}
