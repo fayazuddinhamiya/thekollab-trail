@@ -1,0 +1,326 @@
+/*
+ * ServicesGrid — BEM within a CSS Module.
+ *
+ * No literal colour values here; everything resolves through styles/tokens.css.
+ * Nothing in this file animates a layout-triggering property.
+ */
+
+.servicesGrid {
+  position: relative;
+  overflow: hidden;
+  padding-block: var(--space-5xl);
+  padding-inline: var(--space-md);
+  background-color: var(--color-ink);
+  isolation: isolate;
+}
+
+/*
+ * Approximates the blurred #7844ff polygon sitting behind the section in
+ * Figma. A gradient rather than the exported SVG — cheaper to composite and
+ * it scales to any viewport, which the fixed-size export would not.
+ */
+.servicesGrid::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: -10%;
+  block-size: 55%;
+  z-index: -1;
+  background-image: radial-gradient(
+    ellipse 70% 100% at 50% 0%,
+    var(--glow-accent) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.servicesGrid__inner {
+  max-inline-size: var(--layout-max-width);
+  margin-inline: auto;
+}
+
+/* ---------------------------------------------------------------------
+ * Header
+ * ------------------------------------------------------------------ */
+
+.servicesGrid__header {
+  max-inline-size: var(--layout-intro-max-width);
+  margin-inline: auto;
+  margin-block-end: var(--space-4xl);
+  text-align: center;
+}
+
+.servicesGrid__eyebrow {
+  margin-block-end: var(--space-lg);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
+  text-transform: uppercase;
+}
+
+.servicesGrid__heading {
+  margin-block-end: var(--space-md);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: var(--font-size-display);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-display);
+  letter-spacing: var(--letter-spacing-display);
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.servicesGrid__intro {
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-light);
+  line-height: var(--line-height-body);
+  text-wrap: pretty;
+}
+
+/* ---------------------------------------------------------------------
+ * Card grid
+ *
+ * Mobile first: one column, then two at 768px, three at 1024px. The Figma
+ * frame only describes the three-column desktop case.
+ * ------------------------------------------------------------------ */
+
+.servicesGrid__cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.servicesGrid__card {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-card-padding);
+  border: var(--border-width) solid transparent;
+  border-block-end-color: var(--border-default);
+  border-radius: var(--radius-xl);
+  transition:
+    border-color var(--duration-medium) var(--ease-standard),
+    background-color var(--duration-medium) var(--ease-standard);
+}
+
+/* Last card never carries a bottom divider, at any column count. */
+.servicesGrid__card:last-child {
+  border-block-end-color: transparent;
+}
+
+/*
+ * Hover and keyboard focus resolve to the same treatment: the divider
+ * becomes a full rounded border, matching the "hover" frame in Figma.
+ * Pure CSS — no JS touches this. Only paint properties transition, so
+ * there is no layout work per frame.
+ */
+@media (hover: hover) {
+  .servicesGrid__card:hover {
+    border-color: var(--border-default);
+    background-color: var(--surface-raised);
+  }
+}
+
+.servicesGrid__card:focus-within {
+  border-color: var(--border-default);
+  background-color: var(--surface-raised);
+}
+
+@media (min-width: 48rem) {
+  .servicesGrid__cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .servicesGrid__card {
+    border-inline-end-color: var(--border-default);
+  }
+
+  .servicesGrid__card:nth-child(2n) {
+    border-inline-end-color: transparent;
+  }
+
+  /* Final row of a two-column layout. */
+  .servicesGrid__card:nth-last-child(-n + 2) {
+    border-block-end-color: transparent;
+  }
+}
+
+@media (min-width: 64rem) {
+  .servicesGrid__cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .servicesGrid__card:nth-child(2n) {
+    border-inline-end-color: var(--border-default);
+  }
+
+  .servicesGrid__card:nth-child(3n) {
+    border-inline-end-color: transparent;
+  }
+
+  /* Final row of a three-column layout. */
+  .servicesGrid__card:nth-last-child(-n + 3) {
+    border-block-end-color: transparent;
+  }
+}
+
+/* ---------------------------------------------------------------------
+ * Card contents
+ * ------------------------------------------------------------------ */
+
+.servicesGrid__cardNumber {
+  margin-block-end: var(--space-md);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
+}
+
+.servicesGrid__cardText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.servicesGrid__cardTitle {
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: var(--font-size-card-title);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-card-title);
+  letter-spacing: var(--letter-spacing-card-title);
+  text-wrap: balance;
+}
+
+/*
+ * Gradient-filled glyphs, guarded so the text never renders transparent on
+ * a browser without background-clip support.
+ */
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  .servicesGrid__cardTitle {
+    background-image: var(--gradient-title);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+.servicesGrid__cardBody {
+  color: var(--text-body);
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-light);
+  line-height: var(--line-height-body);
+  text-wrap: pretty;
+}
+
+/*
+ * Fixed block-size reserves the icon's space before it paints, so longer
+ * body copy pushes the icon down as a block instead of reflowing around it,
+ * and nothing shifts after load.
+ */
+.servicesGrid__cardMedia {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  block-size: clamp(9rem, 20vw, 13.75rem);
+  margin-block: var(--space-lg);
+}
+
+.servicesGrid__cardIcon {
+  inline-size: auto;
+  max-inline-size: 100%;
+  block-size: 100%;
+  object-fit: contain;
+}
+
+/* ---------------------------------------------------------------------
+ * Links
+ * ------------------------------------------------------------------ */
+
+.servicesGrid__cardLink {
+  /* Pins the link to the card foot however tall the copy above it runs. */
+  margin-block-start: auto;
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: var(--space-2xs);
+  padding: var(--space-3xs);
+  padding-inline-end: var(--space-sm);
+  border: var(--border-width) solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background-color: var(--surface-raised);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-label);
+  transition: background-color var(--duration-fast) var(--ease-standard);
+}
+
+@media (hover: hover) {
+  .servicesGrid__cardLink:hover {
+    background-color: var(--surface-raised-hover);
+  }
+}
+
+.servicesGrid__linkGlyph {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  inline-size: 1.625rem;
+  block-size: 1.625rem;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+}
+
+.servicesGrid__cta {
+  margin-block-start: var(--space-3xl);
+  text-align: center;
+}
+
+.servicesGrid__ctaLink {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-sm) var(--space-lg);
+  border: var(--border-width) solid var(--border-strong);
+  border-radius: var(--radius-md);
+  background-color: var(--surface-raised);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-medium);
+  transition: background-color var(--duration-fast) var(--ease-standard);
+}
+
+@media (hover: hover) {
+  .servicesGrid__ctaLink:hover {
+    background-color: var(--surface-raised-hover);
+  }
+}
+
+/* ---------------------------------------------------------------------
+ * Utilities
+ * ------------------------------------------------------------------ */
+
+.servicesGrid__srOnly {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
