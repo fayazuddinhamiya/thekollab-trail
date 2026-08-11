@@ -1,5 +1,31 @@
 import type { Metadata } from "next";
+import { Archivo, Inter, JetBrains_Mono } from "next/font/google";
+
+import "@/styles/tokens.css";
 import "./globals.css";
+
+/*
+ * Stand-ins for the four unlicensed commercial faces in the Figma file.
+ * Archivo -> PP Monument Narrow, Inter -> Sequel Sans + Helvetica Now
+ * Display, JetBrains Mono -> Proto Mono. See README.
+ */
+const archivo = Archivo({
+  variable: "--font-archivo",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "TheKollab — Services Grid",
@@ -9,7 +35,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      className={`${archivo.variable} ${inter.variable} ${jetbrainsMono.variable}`}
+    >
       <body>{children}</body>
     </html>
   );

@@ -38,8 +38,21 @@ ol[role="list"] {
 body {
   min-height: 100vh;
   line-height: 1.5;
+  background-color: var(--color-ink);
+  color: var(--text-primary);
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/*
+ * Baseline focus indicator. Individual components may restyle this, but
+ * nothing may remove it — every interactive element has to stay visible
+ * under keyboard navigation.
+ */
+:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
 }
 
 img,

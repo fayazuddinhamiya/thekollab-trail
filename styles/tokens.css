@@ -1,0 +1,173 @@
+/*
+ * Design tokens — TheKollab
+ *
+ * This is the ONLY file in the project permitted to contain a literal colour
+ * value. Every component CSS Module references these via var(). The source
+ * Figma file defines no Figma Variables (get_variable_defs returns {}), so
+ * these were derived by hand from the measured values on the "Our Services"
+ * frame (node 681:23419).
+ */
+
+:root {
+  /* ---------------------------------------------------------------------
+   * Palette primitives
+   * ------------------------------------------------------------------ */
+
+  /* Section ground. The design is dark-only — there is no light variant. */
+  --color-ink: #050608;
+
+  --color-paper: #ffffff;
+
+  /* Brand accent. Sole source: the blurred polygon behind the section. */
+  --color-accent: #7844ff;
+
+  /* ---------------------------------------------------------------------
+   * Surfaces — white at low alpha, composited over --color-ink
+   * ------------------------------------------------------------------ */
+
+  --surface-raised: rgb(255 255 255 / 0.04);
+  --surface-raised-hover: rgb(255 255 255 / 0.06);
+
+  /* ---------------------------------------------------------------------
+   * Borders
+   * ------------------------------------------------------------------ */
+
+  --border-subtle: rgb(255 255 255 / 0.07);
+  --border-default: rgb(255 255 255 / 0.1);
+  --border-strong: rgb(255 255 255 / 0.2);
+
+  --border-width: 1px;
+
+  /* ---------------------------------------------------------------------
+   * Text
+   * ------------------------------------------------------------------ */
+
+  --text-primary: rgb(255 255 255 / 1);
+  --text-secondary: rgb(255 255 255 / 0.6);
+  --text-muted: rgb(255 255 255 / 0.5);
+
+  /* Card body copy sits at 50% in the design. */
+  --text-body: rgb(255 255 255 / 0.5);
+
+  /* ---------------------------------------------------------------------
+   * Effects
+   * ------------------------------------------------------------------ */
+
+  /*
+   * Card titles use a diagonal gradient clipped to the glyphs. Any element
+   * using this must also declare a solid colour fallback first — see
+   * ServicesGrid.module.css.
+   */
+  --gradient-title: linear-gradient(
+    -51.78deg,
+    rgb(255 255 255 / 0.34) 30.68%,
+    rgb(255 255 255 / 1) 80.11%
+  );
+
+  /* Approximates the blurred #7844ff polygon behind the section. */
+  --glow-accent: rgb(120 68 255 / 0.25);
+
+  --shadow-badge: 0 5px 20px 0 rgb(0 0 0 / 0.41);
+  --shadow-badge-inset: inset 0 0 8px 0 rgb(255 255 255 / 0.03);
+
+  /* ---------------------------------------------------------------------
+   * Typography
+   *
+   * Four display faces in the source file are unlicensed commercial fonts.
+   * These three Google families stand in for them 1:1 — see README.
+   *   Archivo        <- PP Monument Narrow   (heading, card titles)
+   *   Inter          <- Sequel Sans Light Disp + Helvetica Now Display
+   *   JetBrains Mono <- Proto Mono           (eyebrow, card numerals)
+   *
+   * The --font-*-family vars are wired to next/font in app/layout.tsx.
+   * ------------------------------------------------------------------ */
+
+  --font-display: var(--font-archivo), "Arial Narrow", system-ui, sans-serif;
+  --font-body: var(--font-inter), system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, "SFMono-Regular",
+    monospace;
+
+  /* Type scale — rem so browser text-size preferences are respected. */
+  --font-size-label: 0.75rem; /* 12px — eyebrow, numerals, button */
+  --font-size-body: 1rem; /* 16px — intro and card body */
+  --font-size-card-title: 1.5rem; /* 24px */
+
+  /*
+   * Display heading. Fluid so it survives the 40%-longer-copy stress test
+   * without a fixed-height frame to sit in. Upper bound matches the measured
+   * cap height on the 1512px desktop composition.
+   */
+  --font-size-display: clamp(2rem, 1.2rem + 2.6vw, 3rem);
+
+  --line-height-label: 1;
+  --line-height-body: 1.3125; /* 21px on 16px */
+  --line-height-card-title: 1;
+  --line-height-display: 1.04;
+
+  --letter-spacing-label: 0.08em; /* uppercase mono needs the air */
+  --letter-spacing-card-title: -0.03em; /* -0.72px on 24px */
+  --letter-spacing-display: -0.02em;
+
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+
+  /* ---------------------------------------------------------------------
+   * Spacing
+   * ------------------------------------------------------------------ */
+
+  --space-3xs: 0.25rem; /* 4px  */
+  --space-2xs: 0.5rem; /* 8px  */
+  --space-xs: 0.75rem; /* 12px */
+  --space-sm: 1rem; /* 16px */
+  --space-md: 1.5rem; /* 24px */
+  --space-lg: 2rem; /* 32px */
+  --space-xl: 2.5rem; /* 40px */
+  --space-2xl: 3rem; /* 48px */
+  --space-3xl: 4rem; /* 64px */
+  --space-4xl: 5rem; /* 80px */
+  --space-5xl: 7.5rem; /* 120px */
+
+  /* Card interior padding — 29/30px in the design, normalised to 28. */
+  --space-card-padding: 1.75rem;
+
+  /* ---------------------------------------------------------------------
+   * Radii
+   * ------------------------------------------------------------------ */
+
+  --radius-sm: 0.5rem; /* 8px  — button leading glyph */
+  --radius-md: 0.5625rem; /* 9px  — Explore button */
+  --radius-lg: 0.8125rem; /* 13px — icon badge */
+  --radius-xl: 1rem; /* 16px — card */
+
+  /* ---------------------------------------------------------------------
+   * Layout
+   * ------------------------------------------------------------------ */
+
+  --layout-max-width: 80.8125rem; /* 1293px — measured cards frame */
+  --layout-gutter: var(--space-md);
+  --layout-intro-max-width: 32.375rem; /* 518px — measured text block */
+
+  /* ---------------------------------------------------------------------
+   * Motion
+   *
+   * Not defined in the Figma file; chosen here. Durations stay short because
+   * every animation is transform/opacity only.
+   * ------------------------------------------------------------------ */
+
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-entrance: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+
+  --duration-fast: 150ms;
+  --duration-medium: 260ms;
+  --duration-slow: 600ms;
+
+  /* ---------------------------------------------------------------------
+   * Focus
+   * ------------------------------------------------------------------ */
+
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+  --focus-ring-color: var(--color-paper);
+}
