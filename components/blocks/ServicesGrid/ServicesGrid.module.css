@@ -48,15 +48,15 @@
   z-index: -1;
 
   /*
-   * Origin at the top-right corner, reaching half the width horizontally
-   * and the full header height vertically — so the radii are exactly
-   * 50%/100% and the falloff runs the whole way out rather than stopping
-   * short at 70%.
+   * Origin at the top-right corner, reaching most of the way across
+   * horizontally and the full header height vertically. The falloff runs
+   * the whole way out rather than stopping short, so the light thins
+   * gradually instead of ending on an edge.
    */
   background-image: radial-gradient(
-    ellipse 50% 100% at 100% 0%,
+    ellipse 78% 100% at 100% 0%,
     var(--glow-accent) 0%,
-    var(--glow-accent-soft) 42%,
+    var(--glow-accent-soft) 40%,
     transparent 100%
   );
   pointer-events: none;
