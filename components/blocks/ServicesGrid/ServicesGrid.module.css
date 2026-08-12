@@ -422,6 +422,19 @@
   max-inline-size: 100%;
   block-size: 100%;
   object-fit: contain;
+
+  /*
+   * The artwork's own dots run from near-black to white. The transparent
+   * ground composites fine, but the dark dots are still opaque paint and
+   * were punching a hole through the hover glow behind them, which read as
+   * a black backing. Screen drops them to the backdrop and keeps the lit
+   * ones, so the glow carries through the figure.
+   *
+   * This only works because the icons are the file's original transparent
+   * uploads. Against the flattened node exports used earlier the blend
+   * lightened their opaque backing into a visible rectangle instead.
+   */
+  mix-blend-mode: screen;
 }
 
 /* ---------------------------------------------------------------------
