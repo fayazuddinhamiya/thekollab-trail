@@ -15,6 +15,7 @@
 }
 
 .siteHeader__bar {
+  position: relative;
   display: flex;
   align-items: center;
   gap: var(--space-lg);
@@ -24,6 +25,44 @@
   background-color: var(--surface-nav);
   backdrop-filter: blur(20px);
   pointer-events: auto;
+}
+
+/*
+ * Lime notch riding the bar's top border (node 681:30751) — a 108px line
+ * whose gradient runs transparent → lime → transparent. Offsets are
+ * proportional rather than the frame's fixed 97px/108px so the highlight
+ * keeps its position as the bar resizes.
+ */
+.siteHeader__bar::before {
+  content: "";
+  position: absolute;
+  inset-block-start: calc(var(--border-width) * -1);
+  inset-inline-start: 12%;
+  inline-size: 13.5%;
+  block-size: var(--border-width);
+  background-image: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--color-accent-lime) 50%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* Soft bloom around the notch. Separate layer so the core stays crisp. */
+.siteHeader__bar::after {
+  content: "";
+  position: absolute;
+  inset-block-start: calc(var(--border-width) * -1);
+  inset-inline-start: 12%;
+  inline-size: 13.5%;
+  block-size: 12px;
+  background-image: radial-gradient(
+    ellipse 50% 100% at 50% 0%,
+    var(--glow-notch) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
 }
 
 /* ---------------------------------------------------------------------

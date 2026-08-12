@@ -91,6 +91,7 @@
   --surface-nav: rgb(78 78 78 / 0.15);
   --border-nav: rgb(255 255 255 / 0.15);
   --glow-pill: 0 0 23px 0 rgb(255 241 93 / 0.4);
+  --glow-notch: rgb(230 246 77 / 0.35);
 
   --shadow-badge: 0 5px 20px 0 rgb(0 0 0 / 0.41);
   --shadow-badge-inset: inset 0 0 8px 0 rgb(255 255 255 / 0.03);
