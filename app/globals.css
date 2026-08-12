@@ -28,8 +28,13 @@ dd {
   margin: 0;
 }
 
-ul[role="list"],
-ol[role="list"] {
+/*
+ * Wrapped in :where() so the reset carries zero specificity. Without it
+ * ul[role="list"] scores (0,1,1) and silently beats any single class in a
+ * CSS Module, which is how a component's own margin and padding end up
+ * being ignored.
+ */
+:where(ul[role="list"], ol[role="list"]) {
   list-style: none;
   margin: 0;
   padding: 0;
