@@ -6,12 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/*
- * useLayoutEffect runs after DOM mutation but before the browser paints, so
- * the tweens' from-state is applied without a flash of fully-visible content.
- * It has no meaning during SSR, so fall back to useEffect there to avoid
- * React's server warning.
- */
+/* Applies the from-state before paint; useEffect on the server to avoid a warning. */
 const useIsomorphicLayoutEffect =
   typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
@@ -20,18 +15,11 @@ interface ServicesGridMotionProps {
 }
 
 /**
- * Motion wrapper for the ServicesGrid block.
+ * Renders no copy of its own — it wraps children already rendered on the
+ * server, so with JavaScript disabled the block is simply visible.
  *
- * This component renders no copy of its own — it only wraps children that
- * were already rendered on the server. With JavaScript disabled nothing
- * here executes and the block is left in its natural, fully visible state.
- *
- * Two separate behaviours:
- *
- *   - the header runs on load, because it is above the fold and a scroll
- *     trigger there would fire instantly anyway
- *   - the cards keep a scroll trigger, since they are mostly below the fold
- *     and should arrive as they are reached
+ * The header runs on load, since a scroll trigger above the fold fires
+ * instantly anyway. The cards keep a scroll trigger.
  */
 export default function ServicesGridMotion({
   children,
@@ -43,10 +31,8 @@ export default function ServicesGridMotion({
     if (!root) return;
 
     /*
-     * Everything registers inside a matchMedia context. When
-     * prefers-reduced-motion is `reduce` the callback never runs, so no
-     * from-state is ever applied and the layout holds intact — rather than
-     * motion being cancelled partway and stranding a transform.
+     * Under `reduce` this callback never runs, so no from-state is applied
+     * and the layout holds — rather than motion stopping mid-transform.
      */
     const mm = gsap.matchMedia();
 
@@ -56,11 +42,7 @@ export default function ServicesGridMotion({
       const cards = root.querySelectorAll('[data-motion="card"]');
       const cardList = cards[0]?.parentElement ?? null;
 
-      /*
-       * Load sequence. transform and opacity only — neither triggers
-       * layout, so the space these elements occupy is already reserved and
-       * nothing shifts after paint.
-       */
+      /* transform and opacity only — no layout work per frame. */
       const timeline = gsap.timeline();
 
       if (intro.length > 0) {
@@ -78,10 +60,7 @@ export default function ServicesGridMotion({
       }
 
       if (badge) {
-        /*
-         * Relative rotation so the tween ends on whatever rest angle the
-         * stylesheet sets, rather than this file having to know it.
-         */
+        /* Relative rotation, so it ends on whatever rest angle the CSS sets. */
         timeline.from(
           badge,
           {

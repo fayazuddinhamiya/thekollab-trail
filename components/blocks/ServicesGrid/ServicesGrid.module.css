@@ -1,18 +1,9 @@
-/*
- * ServicesGrid — BEM within a CSS Module.
- *
- * No literal colour values here; everything resolves through styles/tokens.css.
- * Nothing in this file animates a layout-triggering property.
- */
+/* ServicesGrid — BEM within a CSS Module. Colours all resolve through tokens. */
 
 .servicesGrid {
   position: relative;
   overflow: hidden;
-  /*
-   * Top padding is overridable so a page that floats a header above the
-   * block can add its footprint, without the block itself knowing that a
-   * nav exists. Falls back to the frame's 82px when nothing overrides it.
-   */
+  /* Overridable so a page with a floating header can add its footprint. */
   padding-block: var(--services-grid-space-start, var(--layout-block-start))
     var(--space-5xl);
   padding-inline: var(--space-md);
@@ -20,39 +11,14 @@
   isolation: isolate;
 }
 
-/*
- * The accent glow behind the section (node 681:23420). The source polygon
- *   M1690 202 L202 374 L663 542 L793 677 L1696 853 Z
- * has its mass against the right edge and tapers to a point on the left,
- * so the light reads right-to-left — not centred. Rebuilt as gradients
- * rather than the exported SVG so it scales to any viewport instead of
- * being pinned to the 1512px frame.
- */
+/* Accent glow. Fixed height, or it grows with the cards and washes over them. */
 .servicesGrid::before {
   content: "";
   position: absolute;
   inset-block-start: 0;
-
-  /*
-   * Flush to the section's edges so the ellipse's origin lands on the real
-   * top-right corner rather than off-canvas.
-   */
   inset-inline: 0;
-
-  /*
-   * Fixed rather than a percentage of the section: the section grows with
-   * its cards, and a percentage let the glow track that growth and spill
-   * across them. 28rem is the header region, ending where the cards begin.
-   */
   block-size: 28rem;
   z-index: -1;
-
-  /*
-   * Origin sits just off the right edge and a third of the way down the
-   * header, so the light reads as coming from outside the frame rather
-   * than from a point on the corner. The core holds to 19% before it
-   * starts thinning, which keeps it solid across the top right.
-   */
   background-image: radial-gradient(
     ellipse 75% 60% at 102% 36%,
     var(--glow-accent) 19%,
@@ -62,16 +28,7 @@
   pointer-events: none;
 }
 
-/*
- * Halftone texture over the upper background (node 681:23421) — the file's
- * own 464x160 tile, repeated. It is white dots at roughly 8% alpha on a
- * transparent ground, so it needs no opacity handling of its own. A CSS
- * dot lattice was tried first and read as a regular grid; the real asset
- * clusters irregularly.
- *
- * The frame places it at -5,-11 across 1861x320, i.e. two tile rows
- * bleeding off both edges.
- */
+/* Halftone tile from the file, placed as the frame has it: -5,-11 over 1861x320. */
 .servicesGrid::after {
   content: "";
   position: absolute;
@@ -80,7 +37,6 @@
   block-size: 320px;
   z-index: -1;
   background-image: url("/brand/dots.png");
-  background-position: 0 0;
   background-repeat: repeat;
   background-size: 464px 160px;
   pointer-events: none;
@@ -95,11 +51,7 @@
  * Header
  * ------------------------------------------------------------------ */
 
-/*
- * Wider than the measured 518px text block. The substitute display face is
- * proportionally wider than the file's condensed original, so the heading
- * needs more room to hold the same two lines it holds in Figma.
- */
+/* Wider than the frame's 518px — the substitute display face runs wider. */
 .servicesGrid__header {
   max-inline-size: 46rem;
   margin-inline: auto;
@@ -131,7 +83,6 @@
   text-wrap: balance;
 }
 
-/* Same diagonal fade the card titles use — the design applies it here too. */
 @supports (background-clip: text) or (-webkit-background-clip: text) {
   .servicesGrid__heading {
     background-image: var(--gradient-title);
@@ -142,11 +93,9 @@
 }
 
 /*
- * Both marks sit in the text flow rather than floating over it, so they
- * can never land on a letter. See headingParts() for where they are cut in.
+ * Both marks sit in the text flow, so they can never land on a letter and
+ * the badge's own width is what opens the gap. See headingParts().
  */
-
-/* Rides just after the ampersand, raised toward the cap line. */
 .servicesGrid__headingDot {
   display: inline-block;
   vertical-align: 0.46em;
@@ -156,11 +105,6 @@
   background-color: var(--color-paper);
 }
 
-/*
- * The glass tile with the star, between the final two words. Its own
- * inline width and margins are what open the gap the design shows — the
- * words are never overlapped, at any copy length.
- */
 .servicesGrid__headingBadge {
   display: inline-flex;
   align-items: center;
@@ -194,20 +138,10 @@
 }
 
 /* ---------------------------------------------------------------------
- * Card grid
- *
- * Mobile first: one column, then two at 768px, three at 1024px. The Figma
- * frame only describes the three-column desktop case.
+ * Cards — snap carousel on mobile, grid from 768px
  * ------------------------------------------------------------------ */
 
-/*
- * Mobile is a snap carousel, matching the frame where the card row is
- * 1987px wide inside a 393px screen. It becomes a grid from 768px up.
- *
- * The negative margin lets the track bleed to the section's edges so a
- * card can sit flush while the next one peeks, without the section's own
- * gutter cropping it.
- */
+/* Negative margin lets the track bleed past the section's gutter. */
 .servicesGrid__cards {
   display: flex;
   gap: var(--space-sm);
@@ -217,10 +151,7 @@
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-padding-inline-start: var(--space-md);
-
-  /* Keeps a swipe past the last card from bouncing the page. */
   overscroll-behavior-x: contain;
-
   scrollbar-width: none;
 }
 
@@ -228,28 +159,16 @@
   display: none;
 }
 
+/* Touch has no hover, so on mobile the active treatment is the resting one. */
 .servicesGrid__card {
   position: relative;
   isolation: isolate;
   display: flex;
   flex-direction: column;
-
-  /*
-   * Carousel slide until the grid takes over at 768px. 85% of the track's
-   * content box works out at roughly three quarters of the viewport, which
-   * is the proportion the 393px mobile frame uses — wide enough to read,
-   * narrow enough that the next card peeks and the swipe is discoverable.
-   */
   flex: 0 0 auto;
   inline-size: 85%;
   scroll-snap-align: start;
-
   padding: var(--space-card-padding);
-  /*
-   * As a carousel slide each card is its own object, and a touch screen
-   * has no hover to reveal anything — so the full treatment is the resting
-   * treatment here. The grid breakpoint strips it back to a column rule.
-   */
   border: var(--border-width) solid var(--border-default);
   border-radius: var(--radius-xl);
   transition:
@@ -257,11 +176,7 @@
     border-radius var(--duration-medium) var(--ease-standard);
 }
 
-/*
- * Violet wash behind the card's artwork on the active state. Sits on its
- * own layer and fades on opacity alone, so the hover costs one composited
- * property and no layout.
- */
+/* Wash. */
 .servicesGrid__card::before {
   content: "";
   position: absolute;
@@ -269,8 +184,6 @@
   z-index: -1;
   border-radius: inherit;
   opacity: 1;
-
-  /* Enters at the top-left corner and bleeds down across the card. */
   background-image: radial-gradient(
     ellipse 95% 75% at 0% 0%,
     var(--glow-card) 0%,
@@ -282,13 +195,9 @@
 }
 
 /*
- * The four corner marks on the active card (node 681:23433). They are 3x3
- * squares in the file, not dots — a circle gradient at a corner gets
- * clipped to a quarter and anti-aliases into a stair-step. Four solid
- * fills keep the edges crisp at any zoom.
- *
- * The marker box is 1px proud of the card on every side, matching the
- * frame where the point group measures 431x489 against a 430x487 card.
+ * Corner marks. 3x3 squares in the file, not dots — a circle gradient at a
+ * corner clips to a quarter and anti-aliases into a stair-step. Box sits
+ * 1px proud, as the frame's 431x489 marker group does on a 430x487 card.
  */
 .servicesGrid__card::after {
   content: "";
@@ -311,12 +220,7 @@
   pointer-events: none;
 }
 
-/*
- * Hover and keyboard focus resolve to the same treatment: the divider
- * becomes a full rounded border, matching the "hover" frame in Figma.
- * Pure CSS — no JS touches this. Only paint properties transition, so
- * there is no layout work per frame.
- */
+/* Hover and keyboard focus resolve to the same state. Pure CSS. */
 @media (hover: hover) {
   .servicesGrid__card:hover {
     border-color: var(--border-default);
@@ -339,11 +243,6 @@
   opacity: 1;
 }
 
-/*
- * From here the carousel becomes a grid: the track stops scrolling and
- * snapping, the slides give up their fixed width, and each card drops back
- * to a bare column rule with its full treatment held for hover.
- */
 @media (min-width: 48rem) {
   .servicesGrid__cards {
     display: grid;
@@ -392,7 +291,7 @@
  * Card contents
  * ------------------------------------------------------------------ */
 
-/* Copy and link sit above the overflowing artwork layer. */
+/* Copy and link sit above the artwork, which overflows its well. */
 .servicesGrid__cardNumber,
 .servicesGrid__cardText,
 .servicesGrid__cardLink {
@@ -426,10 +325,7 @@
   text-wrap: balance;
 }
 
-/*
- * Gradient-filled glyphs, guarded so the text never renders transparent on
- * a browser without background-clip support.
- */
+/* Guarded, or the glyphs render transparent where background-clip is absent. */
 @supports (background-clip: text) or (-webkit-background-clip: text) {
   .servicesGrid__cardTitle {
     background-image: var(--gradient-title);
@@ -449,48 +345,27 @@
 }
 
 /*
- * In the frame the artwork is a layer, not a flow item: it sits at
- * x=50 y=157 at 348x332 inside a 432x490 card, overlapping the copy above
- * it and the link below. So it contributes no height of its own, which is
- * how the card stays 490 while holding art taller than the space between
- * them.
- *
- * Reproduced by reserving a shorter well and letting the image overflow
- * it. The well takes its height from the card's own width via
- * aspect-ratio, so nothing here is a fixed size and the reservation still
- * happens before paint — no shift after load.
+ * The artwork is a layer in the frame, not a flow item, which is how the
+ * card holds art taller than the space between its copy and link. Space is
+ * reserved by a shorter well sized from the card's width; the image is
+ * taken out of flow so it can overflow without stretching the flex item
+ * that it then measures its own height against.
  */
 .servicesGrid__cardMedia {
   position: relative;
   z-index: 0;
-
-  /*
-   * flex: none and the absolutely positioned image below keep the well's
-   * height coming from aspect-ratio alone. Left in flow, the oversized
-   * image would stretch the flex item, which the image then measures its
-   * own percentage height against — a loop that resolves far too tall.
-   */
   flex: none;
   aspect-ratio: 1.9;
   margin-block: var(--space-lg);
 }
 
 /*
- * Width comes from the card (see iconWidthPercent) and the height follows
- * from the image's own aspect ratio — the six pieces of art are different
- * shapes and sizes in the frame, from 160x263 to 367x348, so forcing a
- * shared height distorts them.
- *
- * Larger pieces end up taller than this well, which is intended: the art
- * is a layer in the frame and spills over the copy and link.
- */
-/*
- * Anchored low in the well rather than centred in it. In the frame the six
- * pieces sit at different offsets, but their vertical centres land within
- * 15px of each other — 324, 316, 328, 328, 327, 313 in a 487px card — so
- * they effectively share one centre line about two thirds down. Centring
- * in the well put that line ~30px too high, which is what closed the gap
- * to the body copy.
+ * Width per card (iconWidthPercent), height from the image — the six pieces
+ * run 160x263 to 367x348, so a shared height distorts them. Anchored at 65%
+ * because their vertical centres in the frame all land about two thirds
+ * down. Screen blending keeps the near-black dots from punching through the
+ * wash behind them; it relies on these being the original transparent
+ * uploads rather than the flattened node exports.
  */
 .servicesGrid__cardIcon {
   position: absolute;
@@ -500,18 +375,6 @@
   inline-size: var(--services-grid-icon-width, 70%);
   block-size: auto;
   object-fit: contain;
-
-  /*
-   * The artwork's own dots run from near-black to white. The transparent
-   * ground composites fine, but the dark dots are still opaque paint and
-   * were punching a hole through the hover glow behind them, which read as
-   * a black backing. Screen drops them to the backdrop and keeps the lit
-   * ones, so the glow carries through the figure.
-   *
-   * This only works because the icons are the file's original transparent
-   * uploads. Against the flattened node exports used earlier the blend
-   * lightened their opaque backing into a visible rectangle instead.
-   */
   mix-blend-mode: screen;
 }
 
@@ -520,7 +383,7 @@
  * ------------------------------------------------------------------ */
 
 .servicesGrid__cardLink {
-  /* Pins the link to the card foot however tall the copy above it runs. */
+  /* Pins to the card foot however tall the copy above runs. */
   margin-block-start: auto;
   display: inline-flex;
   align-items: center;

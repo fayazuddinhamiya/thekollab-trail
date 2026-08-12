@@ -11,12 +11,10 @@ export const metadata: Metadata = {
 };
 
 /*
- * Server component. The fixture stands in for a resolved Payload document;
- * there is no CMS call and no client boundary anywhere beneath this, so all
- * copy is present in the initial HTML.
- *
- * SiteHeader sits alongside the block rather than inside it — the block is
- * reordered within a Payload page and must not carry site chrome with it.
+ * Server component. The fixture stands in for a resolved Payload document —
+ * no CMS call, and no client boundary below this, so all copy is in the
+ * initial HTML. SiteHeader sits alongside the block rather than inside it,
+ * since the block gets reordered within a page and must not carry chrome.
  */
 export default function ServicesGridPage() {
   return (

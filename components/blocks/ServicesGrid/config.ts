@@ -1,15 +1,10 @@
 import type { Block } from "payload";
 
 /*
- * Payload block config for the services grid.
- *
- * This is the config object only — there is no Payload instance, database
- * or admin server in this repo. `payload` is a devDependency purely so this
- * file typechecks against the real Block type rather than a hand-written
- * approximation.
- *
- * Field names mirror ./types.ts one-for-one, so a resolved Payload document
- * can be spread straight into <ServicesGrid /> with no mapping layer.
+ * The Block object only — no Payload instance, database or admin server.
+ * `payload` is a devDependency so this typechecks against the real Block
+ * type. Fields mirror ./types.ts, so a resolved document spreads straight
+ * into <ServicesGrid /> with no mapping layer.
  */
 export const ServicesGridBlock: Block = {
   slug: "servicesGrid",

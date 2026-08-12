@@ -1,7 +1,4 @@
-/*
- * SiteHeader — BEM within a CSS Module.
- * No literal colour values; everything resolves through styles/tokens.css.
- */
+/* SiteHeader — BEM within a CSS Module. Colours resolve through tokens. */
 
 .siteHeader {
   position: absolute;
@@ -19,12 +16,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-lg);
-  /*
-   * Vertical padding is short by the border so the bar measures the
-   * frame's 56px overall rather than 58 — the block below reserves exactly
-   * 88px (32 offset + 56), and 2px of drift there shows up as a 2px error
-   * in every gap beneath it.
-   */
+  /* Short by the border, so the bar measures the frame's 56px, not 58. */
   padding: calc(var(--space-2xs) - var(--border-width)) var(--space-2xs)
     calc(var(--space-2xs) - var(--border-width)) var(--space-sm);
   border: var(--border-width) solid var(--border-nav);
@@ -34,12 +26,7 @@
   pointer-events: auto;
 }
 
-/*
- * Lime notch riding the bar's top border (node 681:30751) — a 108px line
- * whose gradient runs transparent → lime → transparent. Offsets are
- * proportional rather than the frame's fixed 97px/108px so the highlight
- * keeps its position as the bar resizes.
- */
+/* Lime notch on the top border (node 681:30751), placed proportionally. */
 .siteHeader__bar::before {
   content: "";
   position: absolute;
@@ -56,7 +43,7 @@
   pointer-events: none;
 }
 
-/* Soft bloom around the notch. Separate layer so the core stays crisp. */
+/* Bloom, on its own layer so the core stays crisp. */
 .siteHeader__bar::after {
   content: "";
   position: absolute;
@@ -128,7 +115,7 @@
   }
 }
 
-/* Current page: full-strength label preceded by the caret from the design. */
+/* Current page: full-strength label with the caret. */
 .siteHeader__link--current {
   display: flex;
   align-items: center;
@@ -213,13 +200,10 @@
   color: var(--color-ink);
 }
 
-/* ---------------------------------------------------------------------
- * Narrow viewports
- *
- * The Figma frame only describes the desktop bar. Below the breakpoint the
- * link list is dropped rather than invented as a burger menu that has no
- * design — brand and the two actions stay.
- * ------------------------------------------------------------------ */
+/*
+ * The frame only describes the desktop bar, so below the breakpoint the
+ * link list is dropped rather than a burger menu invented for it.
+ */
 
 @media (max-width: 63.999rem) {
   .siteHeader__links {

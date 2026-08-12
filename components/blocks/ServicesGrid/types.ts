@@ -1,17 +1,8 @@
-/*
- * Prop types for the ServicesGrid block.
- *
- * These are the contract the Payload block config in ./config.ts mirrors.
- * Field names are chosen to read naturally if this shape is later lifted
- * into a full Pages collection.
- */
+/* Prop contract for the block. ./config.ts mirrors these field names. */
 
 export type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
 
-/**
- * Shape of a resolved Payload upload. Matches the fields Payload's media
- * collection returns, so a real CMS response drops in without a mapper.
- */
+/** A resolved Payload upload, so a CMS response drops in without a mapper. */
 export interface ServicesGridMedia {
   url: string;
   alt: string;
@@ -27,11 +18,9 @@ export interface ServicesGridLink {
 export interface ServicesGridCard {
   icon: ServicesGridMedia;
   /**
-   * How wide the artwork renders, as a percentage of the card's content
-   * width. Each card in the design sizes its own icon — they range from
-   * 160px to 367px against a 432px card — so this belongs to the card
-   * rather than to the media document, which may be reused elsewhere at a
-   * different size. Height follows from the image's aspect ratio.
+   * Artwork width as a percentage of the card's content width; height
+   * follows from the image. Per card rather than per media doc, since the
+   * frame sizes each icon differently (160px to 367px on a 432px card).
    */
   iconWidthPercent?: number;
   title: string;
@@ -44,16 +33,12 @@ export interface ServicesGridProps {
   eyebrow?: string;
   heading: string;
   /**
-   * Rendered heading tag. Not hardcoded — this block gets rearranged in
-   * Payload and heading order has to stay valid wherever it lands.
-   * Card titles derive from this, one level down.
+   * Rendered heading tag. A prop because the block gets rearranged and the
+   * outline has to stay valid wherever it lands. Card titles follow one down.
    */
   headingLevel?: HeadingLevel;
   intro: string;
   cards: ServicesGridCard[];
-  /**
-   * Optional. The source Figma frame has no CTA banner — only the per-card
-   * links — so this renders nothing when omitted.
-   */
+  /** Optional — the frame has no CTA banner, only the per-card links. */
   cta?: ServicesGridLink;
 }

@@ -1,7 +1,4 @@
-/*
- * Baseline reset. Design tokens live in styles/tokens.css — nothing in this
- * file or any component CSS Module may declare a raw colour value.
- */
+/* Baseline reset. Colours live in styles/tokens.css. */
 
 *,
 *::before,
@@ -28,12 +25,7 @@ dd {
   margin: 0;
 }
 
-/*
- * Wrapped in :where() so the reset carries zero specificity. Without it
- * ul[role="list"] scores (0,1,1) and silently beats any single class in a
- * CSS Module, which is how a component's own margin and padding end up
- * being ignored.
- */
+/* :where() so this scores zero and never beats a component's own class. */
 :where(ul[role="list"], ol[role="list"]) {
   list-style: none;
   margin: 0;
@@ -50,11 +42,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/*
- * Baseline focus indicator. Individual components may restyle this, but
- * nothing may remove it — every interactive element has to stay visible
- * under keyboard navigation.
- */
+/* Components may restyle this, but nothing may remove it. */
 :focus-visible {
   outline: var(--focus-ring-width) solid var(--focus-ring-color);
   outline-offset: var(--focus-ring-offset);
@@ -81,10 +69,7 @@ a {
   text-decoration: none;
 }
 
-/*
- * Global reduced-motion guard. GSAP handles its own teardown via
- * gsap.matchMedia(); this covers everything CSS-driven.
- */
+/* Covers CSS-driven motion; GSAP tears itself down via matchMedia(). */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

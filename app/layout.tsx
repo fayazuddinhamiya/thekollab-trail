@@ -4,11 +4,7 @@ import { Archivo, Inter, JetBrains_Mono } from "next/font/google";
 import "@/styles/tokens.css";
 import "./globals.css";
 
-/*
- * Stand-ins for the four unlicensed commercial faces in the Figma file.
- * Archivo -> PP Monument Narrow, Inter -> Sequel Sans + Helvetica Now
- * Display, JetBrains Mono -> Proto Mono. See README.
- */
+/* Stand-ins for four unlicensed commercial faces — see README. */
 const archivo = Archivo({
   variable: "--font-archivo",
   subsets: ["latin"],

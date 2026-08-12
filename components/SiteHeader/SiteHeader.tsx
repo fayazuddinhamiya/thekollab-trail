@@ -4,15 +4,10 @@ import SiteHeaderMotion from "./SiteHeaderMotion";
 import styles from "./SiteHeader.module.css";
 
 /*
- * Floating site navigation from the top of the "Our Services" frame
- * (node 681:30714).
- *
- * Deliberately not part of the ServicesGrid block: the block gets reordered
- * inside a Payload page and must not carry site chrome with it. It lives
- * here so the page still matches the frame while the block stays reusable.
- *
- * Server component — no client boundary, so every label is in the initial
- * HTML like the rest of the page.
+ * Floating nav from the top of the "Our Services" frame (node 681:30714).
+ * Kept out of the ServicesGrid block, which gets reordered within a page
+ * and must not carry site chrome. Server component — labels are in the
+ * initial HTML.
  */
 
 interface NavLink {
@@ -30,7 +25,7 @@ const NAV_LINKS: NavLink[] = [
   { label: "Blog", href: "/blog" },
 ];
 
-/** Three-dot mark used inside the proposal pill and the card links. */
+/** Three-dot mark in the proposal pill. */
 function DotGlyph({ className }: { className?: string }) {
   return (
     <span className={className} aria-hidden="true">

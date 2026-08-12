@@ -1,11 +1,9 @@
 /*
  * Design tokens — TheKollab
  *
- * This is the ONLY file in the project permitted to contain a literal colour
- * value. Every component CSS Module references these via var(). The source
- * Figma file defines no Figma Variables (get_variable_defs returns {}), so
- * these were derived by hand from the measured values on the "Our Services"
- * frame (node 681:23419).
+ * The only file permitted a literal colour value; modules reference these
+ * via var(). The Figma file defines no Variables, so these were measured by
+ * hand off the "Our Services" frame (node 681:23419).
  */
 
 :root {
@@ -21,12 +19,7 @@
   /* Brand accent. Sole source: the blurred polygon behind the section. */
   --color-accent: #7844ff;
 
-  /*
-   * Secondary accent. The file uses two closely related limes: the star
-   * badge and logo mark sit on one, the "Free proposal" pill on the other.
-   * Kept as separate tokens rather than reconciled — that is a call for the
-   * client, not something to silently flatten.
-   */
+  /* Two closely related limes in the file; kept distinct, not flattened. */
   --color-accent-lime: #e6f64d;
   --color-accent-pill: #f0ff56;
 
@@ -65,11 +58,7 @@
    * Effects
    * ------------------------------------------------------------------ */
 
-  /*
-   * Card titles use a diagonal gradient clipped to the glyphs. Any element
-   * using this must also declare a solid colour fallback first — see
-   * ServicesGrid.module.css.
-   */
+  /* Clipped to glyphs; callers declare a solid fallback first. */
   --gradient-title: linear-gradient(
     -51.78deg,
     rgb(255 255 255 / 0.34) 30.68%,
@@ -84,7 +73,6 @@
   --glow-card: rgb(120 68 255 / 0.16);
   --glow-card-soft: rgb(120 68 255 / 0.1);
 
-
   /* Floating nav bar. */
   --surface-nav: rgb(78 78 78 / 0.15);
   --border-nav: rgb(255 255 255 / 0.15);
@@ -97,30 +85,23 @@
   /* ---------------------------------------------------------------------
    * Typography
    *
-   * Four display faces in the source file are unlicensed commercial fonts.
-   * These three Google families stand in for them 1:1 — see README.
-   *   Archivo        <- PP Monument Narrow   (heading, card titles)
+   * Stand-ins for four unlicensed commercial faces — see README.
+   *   Archivo        <- PP Monument Narrow
    *   Inter          <- Sequel Sans Light Disp + Helvetica Now Display
-   *   JetBrains Mono <- Proto Mono           (eyebrow, card numerals)
-   *
-   * The --font-*-family vars are wired to next/font in app/layout.tsx.
+   *   JetBrains Mono <- Proto Mono
    * ------------------------------------------------------------------ */
 
   --font-display: var(--font-archivo), "Arial Narrow", system-ui, sans-serif;
   --font-body: var(--font-inter), system-ui, -apple-system, sans-serif;
-  --font-mono: var(--font-jetbrains-mono), ui-monospace, "SFMono-Regular",
-    monospace;
+  --font-mono:
+    var(--font-jetbrains-mono), ui-monospace, "SFMono-Regular", monospace;
 
   /* Type scale — rem so browser text-size preferences are respected. */
   --font-size-label: 0.75rem; /* 12px — eyebrow, numerals, button */
   --font-size-body: 1rem; /* 16px — intro and card body */
   --font-size-card-title: 1.5rem; /* 24px */
 
-  /*
-   * Display heading. Fluid so it survives the 40%-longer-copy stress test
-   * without a fixed-height frame to sit in. Upper bound matches the measured
-   * cap height on the 1512px desktop composition.
-   */
+  /* Fluid, so longer CMS copy has somewhere to go. */
   --font-size-display: clamp(2rem, 1.2rem + 2.6vw, 3rem);
 
   --line-height-label: 1;
@@ -173,9 +154,8 @@
   --layout-intro-max-width: 32.375rem; /* 518px — measured text block */
 
   /*
-   * Vertical rhythm measured directly off the frame. The nav is y=32 with
-   * a height of 56, so it occupies the first 88px; the eyebrow starts at
-   * y=170, the heading at 206, the intro at 338 and the cards at 450.
+   * Measured off the frame: nav y=32 h=56 (so 88px), eyebrow 170,
+   * heading 206, intro 338, cards 450.
    */
   --layout-nav-reserve: 5.5rem; /* 88px — nav offset plus its height */
   --layout-block-start: 5.125rem; /* 82px — nav baseline to eyebrow */
@@ -186,8 +166,7 @@
   /* ---------------------------------------------------------------------
    * Motion
    *
-   * Not defined in the Figma file; chosen here. Durations stay short because
-   * every animation is transform/opacity only.
+   * Not in the Figma file; chosen here.
    * ------------------------------------------------------------------ */
 
   --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);

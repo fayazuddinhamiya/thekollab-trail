@@ -5,11 +5,7 @@ import StarBadgeIcon from "./StarBadgeIcon";
 import styles from "./ServicesGrid.module.css";
 import type { HeadingLevel, ServicesGridProps } from "./types";
 
-/**
- * Decorative glyph inside the Explore link. Reproduced from the measured
- * geometry in the Figma file rather than exported, since it is three
- * rectangles rather than real vector artwork.
- */
+/** Decorative glyph in the Explore link, from the frame's measured geometry. */
 function LinkGlyph() {
   return (
     <span className={styles.servicesGrid__linkGlyph} aria-hidden="true">
@@ -34,24 +30,15 @@ function LinkGlyph() {
   );
 }
 
-/**
- * Card titles sit one level below the block heading so the outline stays
- * valid no matter where the block is placed. Clamped at h6.
- */
+/** Card titles sit one level below the block heading. Clamped at h6. */
 function nextLevel(level: HeadingLevel): HeadingLevel {
   return Math.min(level + 1, 6) as HeadingLevel;
 }
 
 /**
- * Splits the heading so the two decorative marks can sit in the text flow
- * rather than floating over it at fixed offsets:
- *
- *   - the dot goes immediately after the first ampersand, touching it
- *   - the star badge goes between the final two words, so the gap it needs
- *     is made by the badge's own width instead of overlapping letters
- *
- * Both are decorative and derived from the copy, so any heading works —
- * no ampersand simply means no dot, and a single-word heading no badge.
+ * Cuts the heading so the dot lands after the first ampersand and the badge
+ * between the final two words, putting both in the text flow instead of
+ * over it. Any heading works: no ampersand means no dot, one word no badge.
  */
 function headingParts(heading: string) {
   const words = heading.trim().split(/\s+/);
@@ -179,11 +166,7 @@ export default function ServicesGrid({
             ))}
           </ul>
 
-          {/*
-            Payload always returns a group as an object, so an empty CTA
-            arrives as { label: "", href: "" } rather than undefined. Both
-            fields have to be populated for it to render.
-          */}
+          {/* Payload returns an empty group as {label:"",href:""}, not undefined. */}
           {cta?.label && cta?.href ? (
             <div className={styles.servicesGrid__cta} data-motion="card">
               <a className={styles.servicesGrid__ctaLink} href={cta.href}>

@@ -1,23 +1,17 @@
 import type { ServicesGridProps } from "@/components/blocks/ServicesGrid";
 
 /*
- * Local fixture standing in for a resolved Payload document. Typed against
- * the block's prop contract, so a field renamed in config.ts / types.ts
- * breaks the build here rather than silently rendering nothing.
+ * Stands in for a resolved Payload document. Typed against the block's prop
+ * contract, so renaming a field breaks the build here rather than silently
+ * rendering nothing.
  *
- * Copy transcribed verbatim from the "Our Services" frame (node 681:23419),
- * including the design's own casing on "Kol rounds" and "Seo & Content
- * marketing".
+ * Copy is verbatim from the "Our Services" frame (node 681:23419), keeping
+ * the design's own casing on "Kol rounds" and "Seo & Content marketing".
+ * The eyebrow is the exception: the design uppercases it via CSS, so it is
+ * stored in sentence case.
  *
- * The eyebrow is the one string stored differently from how it appears: the
- * design renders it uppercase via text-transform rather than storing it that
- * way, so it lives here as "Our Services" and is uppercased at render.
- *
- * Icons are the original transparent uploads from the file rather than the
- * flattened node exports — the exports arrive pre-composited onto the
- * section background and cannot sit over a card that changes colour.
- *
- * `cta` is intentionally absent — the source frame has no CTA banner.
+ * Icons are the file's original transparent uploads, not the node exports,
+ * which come pre-composited onto the section background.
  */
 export const servicesGridFixture: ServicesGridProps = {
   eyebrow: "Our Services",

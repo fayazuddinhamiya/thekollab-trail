@@ -11,15 +11,9 @@ interface SiteHeaderMotionProps {
 }
 
 /**
- * Drops the nav bar in on load.
- *
- * Renders no copy of its own — it wraps children already rendered on the
- * server, so with JavaScript disabled the bar is simply present. Kept in
- * the header rather than driven from the block, since the block is
- * reordered inside a Payload page and should not reach outside itself.
- *
- * Timing is coordinated with the block's own intro by convention: the bar
- * lands first, then the copy beneath it follows from 0.15s.
+ * Drops the bar in on load. Renders no copy of its own, so with JavaScript
+ * disabled the bar is simply present. Timing is coordinated with the
+ * block's own intro by convention: the bar lands first.
  */
 export default function SiteHeaderMotion({ children }: SiteHeaderMotionProps) {
   const rootRef = useRef<HTMLDivElement>(null);
