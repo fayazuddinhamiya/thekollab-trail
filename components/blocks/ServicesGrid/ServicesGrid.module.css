@@ -32,27 +32,33 @@
   content: "";
   position: absolute;
   inset-block-start: 0;
-  inset-inline: -8% -18%;
+
+  /*
+   * Flush to the section's edges so the ellipse's origin lands on the real
+   * top-right corner rather than off-canvas.
+   */
+  inset-inline: 0;
 
   /*
    * Fixed rather than a percentage of the section: the section grows with
    * its cards, and a percentage let the glow track that growth and spill
-   * across them. This keeps it inside the header region, ending above
-   * where the cards begin.
+   * across them. 28rem is the header region, ending where the cards begin.
    */
   block-size: 28rem;
   z-index: -1;
-  background-image:
-    radial-gradient(
-      ellipse 52% 88% at 100% 0%,
-      var(--glow-accent) 0%,
-      transparent 70%
-    ),
-    radial-gradient(
-      ellipse 76% 56% at 88% 0%,
-      var(--glow-accent-soft) 0%,
-      transparent 76%
-    );
+
+  /*
+   * Origin at the top-right corner, reaching half the width horizontally
+   * and the full header height vertically — so the radii are exactly
+   * 50%/100% and the falloff runs the whole way out rather than stopping
+   * short at 70%.
+   */
+  background-image: radial-gradient(
+    ellipse 50% 100% at 100% 0%,
+    var(--glow-accent) 0%,
+    var(--glow-accent-soft) 42%,
+    transparent 100%
+  );
   pointer-events: none;
 }
 
