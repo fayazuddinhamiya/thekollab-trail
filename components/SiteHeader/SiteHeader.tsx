@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import SiteHeaderMotion from "./SiteHeaderMotion";
 import styles from "./SiteHeader.module.css";
 
 /*
@@ -45,66 +46,68 @@ function DotGlyph({ className }: { className?: string }) {
 export default function SiteHeader() {
   return (
     <header className={styles.siteHeader}>
-      <nav className={styles.siteHeader__bar} aria-label="Main">
-        <Link className={styles.siteHeader__brand} href="/">
-          {/* eslint-disable-next-line @next/next/no-img-element -- vector brand marks, not raster; next/image would need dangerouslyAllowSVG */}
-          <img
-            className={styles.siteHeader__logoMark}
-            src="/brand/logo-mark.svg"
-            alt=""
-            width={38}
-            height={26}
-          />
-          {/* eslint-disable-next-line @next/next/no-img-element -- see above */}
-          <img
-            className={styles.siteHeader__logoWordmark}
-            src="/brand/logo-wordmark.svg"
-            alt="TheKollab"
-            width={77}
-            height={11}
-          />
-        </Link>
-
-        <ul className={styles.siteHeader__links} role="list">
-          {NAV_LINKS.map((link) => (
-            <li key={link.href} className={styles.siteHeader__linkItem}>
-              <Link
-                className={
-                  link.current
-                    ? `${styles.siteHeader__link} ${styles["siteHeader__link--current"]}`
-                    : styles.siteHeader__link
-                }
-                href={link.href}
-                aria-current={link.current ? "page" : undefined}
-              >
-                {link.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-
-        <div className={styles.siteHeader__actions}>
-          <a
-            className={styles.siteHeader__iconLink}
-            href="https://t.me/"
-            aria-label="TheKollab on Telegram"
-          >
+      <SiteHeaderMotion>
+        <nav className={styles.siteHeader__bar} aria-label="Main">
+          <Link className={styles.siteHeader__brand} href="/">
+            {/* eslint-disable-next-line @next/next/no-img-element -- vector brand marks, not raster; next/image would need dangerouslyAllowSVG */}
+            <img
+              className={styles.siteHeader__logoMark}
+              src="/brand/logo-mark.svg"
+              alt=""
+              width={38}
+              height={26}
+            />
             {/* eslint-disable-next-line @next/next/no-img-element -- see above */}
             <img
-              className={styles.siteHeader__iconLinkGlyph}
-              src="/brand/telegram.svg"
-              alt=""
-              width={18}
-              height={18}
+              className={styles.siteHeader__logoWordmark}
+              src="/brand/logo-wordmark.svg"
+              alt="TheKollab"
+              width={77}
+              height={11}
             />
-          </a>
-
-          <Link className={styles.siteHeader__cta} href="/proposal">
-            <DotGlyph className={styles.siteHeader__ctaGlyph} />
-            Free Proposal
           </Link>
-        </div>
-      </nav>
+
+          <ul className={styles.siteHeader__links} role="list">
+            {NAV_LINKS.map((link) => (
+              <li key={link.href} className={styles.siteHeader__linkItem}>
+                <Link
+                  className={
+                    link.current
+                      ? `${styles.siteHeader__link} ${styles["siteHeader__link--current"]}`
+                      : styles.siteHeader__link
+                  }
+                  href={link.href}
+                  aria-current={link.current ? "page" : undefined}
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+
+          <div className={styles.siteHeader__actions}>
+            <a
+              className={styles.siteHeader__iconLink}
+              href="https://t.me/"
+              aria-label="TheKollab on Telegram"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element -- see above */}
+              <img
+                className={styles.siteHeader__iconLinkGlyph}
+                src="/brand/telegram.svg"
+                alt=""
+                width={18}
+                height={18}
+              />
+            </a>
+
+            <Link className={styles.siteHeader__cta} href="/proposal">
+              <DotGlyph className={styles.siteHeader__ctaGlyph} />
+              Free Proposal
+            </Link>
+          </div>
+        </nav>
+      </SiteHeaderMotion>
     </header>
   );
 }

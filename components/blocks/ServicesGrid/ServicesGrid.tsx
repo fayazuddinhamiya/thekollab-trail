@@ -83,12 +83,18 @@ export default function ServicesGrid({
     <ServicesGridMotion>
       <section className={styles.servicesGrid} aria-labelledby={headingId}>
         <div className={styles.servicesGrid__inner}>
-          <header className={styles.servicesGrid__header} data-motion="">
+          <header className={styles.servicesGrid__header}>
             {eyebrow ? (
-              <p className={styles.servicesGrid__eyebrow}>{eyebrow}</p>
+              <p className={styles.servicesGrid__eyebrow} data-motion="intro">
+                {eyebrow}
+              </p>
             ) : null}
 
-            <Heading id={headingId} className={styles.servicesGrid__heading}>
+            <Heading
+              id={headingId}
+              className={styles.servicesGrid__heading}
+              data-motion="intro"
+            >
               {beforeDot}
               {afterDot === null ? null : (
                 <>
@@ -103,6 +109,7 @@ export default function ServicesGrid({
                 <>
                   <span
                     className={styles.servicesGrid__headingBadge}
+                    data-motion="badge"
                     aria-hidden="true"
                   >
                     <StarBadgeIcon
@@ -114,7 +121,9 @@ export default function ServicesGrid({
               )}
             </Heading>
 
-            <p className={styles.servicesGrid__intro}>{intro}</p>
+            <p className={styles.servicesGrid__intro} data-motion="intro">
+              {intro}
+            </p>
           </header>
 
           <ul className={styles.servicesGrid__cards} role="list">
@@ -122,7 +131,7 @@ export default function ServicesGrid({
               <li
                 key={card.title}
                 className={styles.servicesGrid__card}
-                data-motion=""
+                data-motion="card"
               >
                 <p
                   className={styles.servicesGrid__cardNumber}
@@ -176,7 +185,7 @@ export default function ServicesGrid({
             fields have to be populated for it to render.
           */}
           {cta?.label && cta?.href ? (
-            <div className={styles.servicesGrid__cta} data-motion="">
+            <div className={styles.servicesGrid__cta} data-motion="card">
               <a className={styles.servicesGrid__ctaLink} href={cta.href}>
                 {cta.label}
               </a>
