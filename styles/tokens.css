@@ -78,14 +78,12 @@
 
   /* Approximates the blurred accent polygon behind the section. */
   --glow-accent: rgb(120 68 255 / 0.25);
+  --glow-accent-soft: rgb(120 68 255 / 0.12);
 
   /* Violet wash inside the active card, and the glow behind its artwork. */
   --glow-card: rgb(120 68 255 / 0.16);
   --glow-card-soft: rgb(120 68 255 / 0.1);
 
-  /* Halftone grid sitting over the section background. */
-  --dot-grid-color: rgb(255 255 255 / 0.07);
-  --dot-grid-size: 6px;
 
   /* Floating nav bar. */
   --surface-nav: rgb(78 78 78 / 0.15);
@@ -173,6 +171,17 @@
   --layout-max-width: 80.8125rem; /* 1293px — measured cards frame */
   --layout-gutter: var(--space-md);
   --layout-intro-max-width: 32.375rem; /* 518px — measured text block */
+
+  /*
+   * Vertical rhythm measured directly off the frame. The nav is y=32 with
+   * a height of 56, so it occupies the first 88px; the eyebrow starts at
+   * y=170, the heading at 206, the intro at 338 and the cards at 450.
+   */
+  --layout-nav-reserve: 5.5rem; /* 88px — nav offset plus its height */
+  --layout-block-start: 5.125rem; /* 82px — nav baseline to eyebrow */
+  --layout-eyebrow-gap: var(--space-md); /* 24px — eyebrow to heading */
+  --layout-heading-gap: 1.75rem; /* 28px — heading to intro */
+  --layout-intro-gap: 4.375rem; /* 70px — intro to cards */
 
   /* ---------------------------------------------------------------------
    * Motion

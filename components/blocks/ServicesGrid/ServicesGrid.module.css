@@ -8,50 +8,68 @@
 .servicesGrid {
   position: relative;
   overflow: hidden;
-  padding-block: var(--space-5xl);
+  /*
+   * Top padding is overridable so a page that floats a header above the
+   * block can add its footprint, without the block itself knowing that a
+   * nav exists. Falls back to the frame's 82px when nothing overrides it.
+   */
+  padding-block: var(--services-grid-space-start, var(--layout-block-start))
+    var(--space-5xl);
   padding-inline: var(--space-md);
   background-color: var(--color-ink);
   isolation: isolate;
 }
 
 /*
- * Approximates the blurred accent polygon sitting behind the section in
- * Figma. A gradient rather than the exported SVG — cheaper to composite and
- * it scales to any viewport, which the fixed-size export would not.
+ * The accent glow behind the section (node 681:23420). The source polygon
+ *   M1690 202 L202 374 L663 542 L793 677 L1696 853 Z
+ * has its mass against the right edge and tapers to a point on the left,
+ * so the light reads right-to-left — not centred. Rebuilt as gradients
+ * rather than the exported SVG so it scales to any viewport instead of
+ * being pinned to the 1512px frame.
  */
 .servicesGrid::before {
   content: "";
   position: absolute;
   inset-block-start: 0;
-  inset-inline: -10%;
-  block-size: 55%;
+  inset-inline: -10% -25%;
+  block-size: 78%;
   z-index: -1;
-  background-image: radial-gradient(
-    ellipse 70% 100% at 50% 0%,
-    var(--glow-accent) 0%,
-    transparent 70%
-  );
+  background-image:
+    radial-gradient(
+      ellipse 58% 62% at 96% 14%,
+      var(--glow-accent) 0%,
+      transparent 66%
+    ),
+    radial-gradient(
+      ellipse 70% 30% at 78% 30%,
+      var(--glow-accent-soft) 0%,
+      transparent 72%
+    );
   pointer-events: none;
 }
 
 /*
- * Halftone grid over the upper background, masked so it dissolves before
- * it reaches the cards. Drawn with a repeating gradient rather than the
- * exported bitmap so it stays crisp at any density and costs no request.
+ * Halftone texture over the upper background (node 681:23421) — the file's
+ * own 464x160 tile, repeated. It is white dots at roughly 8% alpha on a
+ * transparent ground, so it needs no opacity handling of its own. A CSS
+ * dot lattice was tried first and read as a regular grid; the real asset
+ * clusters irregularly.
+ *
+ * The frame places it at -5,-11 across 1861x320, i.e. two tile rows
+ * bleeding off both edges.
  */
 .servicesGrid::after {
   content: "";
   position: absolute;
-  inset-block-start: 0;
-  inset-inline: 0;
-  block-size: 60%;
+  inset-block-start: -11px;
+  inset-inline: -5px;
+  block-size: 320px;
   z-index: -1;
-  background-image: radial-gradient(
-    var(--dot-grid-color) 1px,
-    transparent 1px
-  );
-  background-size: var(--dot-grid-size) var(--dot-grid-size);
-  mask-image: linear-gradient(to bottom, black 0%, transparent 85%);
+  background-image: url("/brand/dots.png");
+  background-position: 0 0;
+  background-repeat: repeat;
+  background-size: 464px 160px;
   pointer-events: none;
 }
 
@@ -72,12 +90,12 @@
 .servicesGrid__header {
   max-inline-size: 46rem;
   margin-inline: auto;
-  margin-block-end: var(--space-4xl);
+  margin-block-end: var(--layout-intro-gap);
   text-align: center;
 }
 
 .servicesGrid__eyebrow {
-  margin-block-end: var(--space-lg);
+  margin-block-end: var(--layout-eyebrow-gap);
   color: var(--text-muted);
   font-family: var(--font-mono);
   font-size: var(--font-size-label);
@@ -89,7 +107,7 @@
 
 .servicesGrid__heading {
   position: relative;
-  margin-block-end: var(--space-md);
+  margin-block-end: var(--layout-heading-gap);
   color: var(--text-primary);
   font-family: var(--font-display);
   font-size: var(--font-size-display);
@@ -111,41 +129,39 @@
 }
 
 /*
- * Small solid dot sitting just off the first line of the heading.
- * Decorative; positioned proportionally rather than at the frame's fixed
- * offset so it tracks the heading as the copy reflows.
+ * Both marks sit in the text flow rather than floating over it, so they
+ * can never land on a letter. See headingParts() for where they are cut in.
  */
+
+/* Rides just after the ampersand, raised toward the cap line. */
 .servicesGrid__headingDot {
-  position: absolute;
-  inset-block-start: 12%;
-  inset-inline-start: 48.5%;
+  display: inline-block;
+  vertical-align: 0.46em;
   inline-size: 6px;
   block-size: 6px;
+  margin-inline-start: 0.05em;
   background-color: var(--color-paper);
-  pointer-events: none;
 }
 
 /*
- * The glass tile with the star, overlapping the heading's second line.
- * Proportional placement for the same reason as the dot above — with
- * CMS-editable copy there is no fixed pixel offset that stays correct.
+ * The glass tile with the star, between the final two words. Its own
+ * inline width and margins are what open the gap the design shows — the
+ * words are never overlapped, at any copy length.
  */
 .servicesGrid__headingBadge {
-  position: absolute;
-  inset-block-start: 72%;
-  inset-inline-start: 53.5%;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+  vertical-align: -0.16em;
   inline-size: 42px;
   block-size: 42px;
-  transform: translate(-50%, -50%) rotate(24.57deg);
-  border: 1px solid var(--border-strong);
+  margin-inline: 0.2em;
+  transform: rotate(24.57deg);
+  border: var(--border-width) solid var(--border-strong);
   border-radius: var(--radius-lg);
   background-color: var(--surface-raised);
   backdrop-filter: blur(24px);
   box-shadow: var(--shadow-badge), var(--shadow-badge-inset);
-  pointer-events: none;
 }
 
 .servicesGrid__headingBadgeIcon {

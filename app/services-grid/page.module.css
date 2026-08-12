@@ -1,4 +1,18 @@
-/* Positioning context for the floating site header. */
+/*
+ * Positioning context for the floating site header. The header is taken
+ * out of flow, so the page reserves its footprint here rather than the
+ * block carrying a nav-specific offset it would drag into every other
+ * position it gets placed in.
+ */
 .page {
   position: relative;
+
+  /*
+   * Inherited by the block below. Padding rather than page padding so the
+   * section still begins at the top of the page and its dot texture and
+   * accent glow stay anchored there, behind the bar.
+   */
+  --services-grid-space-start: calc(
+    var(--layout-nav-reserve) + var(--layout-block-start)
+  );
 }

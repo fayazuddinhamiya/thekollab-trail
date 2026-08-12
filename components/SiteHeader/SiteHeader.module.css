@@ -19,7 +19,14 @@
   display: flex;
   align-items: center;
   gap: var(--space-lg);
-  padding: var(--space-2xs) var(--space-2xs) var(--space-2xs) var(--space-sm);
+  /*
+   * Vertical padding is short by the border so the bar measures the
+   * frame's 56px overall rather than 58 — the block below reserves exactly
+   * 88px (32 offset + 56), and 2px of drift there shows up as a 2px error
+   * in every gap beneath it.
+   */
+  padding: calc(var(--space-2xs) - var(--border-width)) var(--space-2xs)
+    calc(var(--space-2xs) - var(--border-width)) var(--space-sm);
   border: var(--border-width) solid var(--border-nav);
   border-radius: var(--radius-xl);
   background-color: var(--surface-nav);

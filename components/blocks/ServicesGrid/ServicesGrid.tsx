@@ -42,6 +42,30 @@ function nextLevel(level: HeadingLevel): HeadingLevel {
   return Math.min(level + 1, 6) as HeadingLevel;
 }
 
+/**
+ * Splits the heading so the two decorative marks can sit in the text flow
+ * rather than floating over it at fixed offsets:
+ *
+ *   - the dot goes immediately after the first ampersand, touching it
+ *   - the star badge goes between the final two words, so the gap it needs
+ *     is made by the badge's own width instead of overlapping letters
+ *
+ * Both are decorative and derived from the copy, so any heading works —
+ * no ampersand simply means no dot, and a single-word heading no badge.
+ */
+function headingParts(heading: string) {
+  const words = heading.trim().split(/\s+/);
+  const lastWord = words.length > 1 ? words[words.length - 1] : null;
+  const lead = (lastWord ? words.slice(0, -1) : words).join(" ");
+  const ampersand = lead.indexOf("&");
+
+  return {
+    beforeDot: ampersand === -1 ? lead : lead.slice(0, ampersand + 1),
+    afterDot: ampersand === -1 ? null : lead.slice(ampersand + 1),
+    lastWord,
+  };
+}
+
 export default function ServicesGrid({
   eyebrow,
   heading,
@@ -53,6 +77,7 @@ export default function ServicesGrid({
   const Heading = `h${headingLevel}` as const;
   const CardTitle = `h${nextLevel(headingLevel)}` as const;
   const headingId = "services-grid-heading";
+  const { beforeDot, afterDot, lastWord } = headingParts(heading);
 
   return (
     <ServicesGridMotion>
@@ -64,20 +89,29 @@ export default function ServicesGrid({
             ) : null}
 
             <Heading id={headingId} className={styles.servicesGrid__heading}>
-              {heading}
-              {/* Decorative marks that overlap the heading in the design. */}
-              <span
-                className={styles.servicesGrid__headingDot}
-                aria-hidden="true"
-              />
-              <span
-                className={styles.servicesGrid__headingBadge}
-                aria-hidden="true"
-              >
-                <StarBadgeIcon
-                  className={styles.servicesGrid__headingBadgeIcon}
-                />
-              </span>
+              {beforeDot}
+              {afterDot === null ? null : (
+                <>
+                  <span
+                    className={styles.servicesGrid__headingDot}
+                    aria-hidden="true"
+                  />
+                  {afterDot}
+                </>
+              )}
+              {lastWord === null ? null : (
+                <>
+                  <span
+                    className={styles.servicesGrid__headingBadge}
+                    aria-hidden="true"
+                  >
+                    <StarBadgeIcon
+                      className={styles.servicesGrid__headingBadgeIcon}
+                    />
+                  </span>
+                  {lastWord}
+                </>
+              )}
             </Heading>
 
             <p className={styles.servicesGrid__intro}>{intro}</p>
