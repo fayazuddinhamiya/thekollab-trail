@@ -436,9 +436,17 @@
  * Larger pieces end up taller than this well, which is intended: the art
  * is a layer in the frame and spills over the copy and link.
  */
+/*
+ * Anchored low in the well rather than centred in it. In the frame the six
+ * pieces sit at different offsets, but their vertical centres land within
+ * 15px of each other — 324, 316, 328, 328, 327, 313 in a 487px card — so
+ * they effectively share one centre line about two thirds down. Centring
+ * in the well put that line ~30px too high, which is what closed the gap
+ * to the body copy.
+ */
 .servicesGrid__cardIcon {
   position: absolute;
-  inset-block-start: 50%;
+  inset-block-start: 65%;
   inset-inline-start: 50%;
   transform: translate(-50%, -50%);
   inline-size: var(--services-grid-icon-width, 70%);
