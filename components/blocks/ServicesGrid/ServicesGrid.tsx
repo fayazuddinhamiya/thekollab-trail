@@ -138,7 +138,14 @@ export default function ServicesGrid({
                   <p className={styles.servicesGrid__cardBody}>{card.body}</p>
                 </div>
 
-                <div className={styles.servicesGrid__cardMedia}>
+                <div
+                  className={styles.servicesGrid__cardMedia}
+                  style={
+                    {
+                      "--services-grid-icon-width": `${card.iconWidthPercent ?? 70}%`,
+                    } as React.CSSProperties
+                  }
+                >
                   <Image
                     className={styles.servicesGrid__cardIcon}
                     src={card.icon.url}

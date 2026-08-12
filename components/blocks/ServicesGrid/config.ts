@@ -77,6 +77,18 @@ export const ServicesGridBlock: Block = {
           required: true,
         },
         {
+          name: "iconWidthPercent",
+          type: "number",
+          label: "Icon width (%)",
+          defaultValue: 70,
+          min: 10,
+          max: 100,
+          admin: {
+            description:
+              "How wide the artwork renders, as a percentage of the card's content width. Height follows from the image itself. Each card in the design sizes its own icon, so this is set per card rather than on the media.",
+          },
+        },
+        {
           name: "title",
           type: "text",
           label: "Title",

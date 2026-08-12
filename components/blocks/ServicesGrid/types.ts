@@ -26,6 +26,14 @@ export interface ServicesGridLink {
 
 export interface ServicesGridCard {
   icon: ServicesGridMedia;
+  /**
+   * How wide the artwork renders, as a percentage of the card's content
+   * width. Each card in the design sizes its own icon — they range from
+   * 160px to 367px against a 432px card — so this belongs to the card
+   * rather than to the media document, which may be reused elsewhere at a
+   * different size. Height follows from the image's aspect ratio.
+   */
+  iconWidthPercent?: number;
   title: string;
   body: string;
   link: ServicesGridLink;

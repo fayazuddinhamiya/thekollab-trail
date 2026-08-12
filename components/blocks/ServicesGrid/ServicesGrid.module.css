@@ -428,18 +428,21 @@
 }
 
 /*
- * Deliberately taller than its well so it spills over the copy and link,
- * as the layer does in the frame. Both values are relative, so the art
- * scales with the card instead of being pinned to the desktop size.
+ * Width comes from the card (see iconWidthPercent) and the height follows
+ * from the image's own aspect ratio — the six pieces of art are different
+ * shapes and sizes in the frame, from 160x263 to 367x348, so forcing a
+ * shared height distorts them.
+ *
+ * Larger pieces end up taller than this well, which is intended: the art
+ * is a layer in the frame and spills over the copy and link.
  */
 .servicesGrid__cardIcon {
   position: absolute;
   inset-block-start: 50%;
   inset-inline-start: 50%;
   transform: translate(-50%, -50%);
-  inline-size: auto;
-  max-inline-size: 93%;
-  block-size: 170%;
+  inline-size: var(--services-grid-icon-width, 70%);
+  block-size: auto;
   object-fit: contain;
 
   /*
