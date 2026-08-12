@@ -1,0 +1,4 @@
+/* Positioning context for the floating site header. */
+.page {
+  position: relative;
+}

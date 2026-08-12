@@ -21,12 +21,24 @@
   /* Brand accent. Sole source: the blurred polygon behind the section. */
   --color-accent: #7844ff;
 
+  /*
+   * Secondary accent. The file uses two closely related limes: the star
+   * badge and logo mark sit on one, the "Free proposal" pill on the other.
+   * Kept as separate tokens rather than reconciled — that is a call for the
+   * client, not something to silently flatten.
+   */
+  --color-accent-lime: #e6f64d;
+  --color-accent-pill: #f0ff56;
+
   /* ---------------------------------------------------------------------
    * Surfaces — white at low alpha, composited over --color-ink
    * ------------------------------------------------------------------ */
 
   --surface-raised: rgb(255 255 255 / 0.04);
   --surface-raised-hover: rgb(255 255 255 / 0.06);
+
+  /* Ink at low alpha, for surfaces sitting on top of an accent fill. */
+  --surface-on-accent: rgb(5 6 8 / 0.1);
 
   /* ---------------------------------------------------------------------
    * Borders
@@ -64,8 +76,21 @@
     rgb(255 255 255 / 1) 80.11%
   );
 
-  /* Approximates the blurred #7844ff polygon behind the section. */
+  /* Approximates the blurred accent polygon behind the section. */
   --glow-accent: rgb(120 68 255 / 0.25);
+
+  /* Violet wash inside the active card, and the glow behind its artwork. */
+  --glow-card: rgb(120 68 255 / 0.16);
+  --glow-card-soft: rgb(120 68 255 / 0.1);
+
+  /* Halftone grid sitting over the section background. */
+  --dot-grid-color: rgb(255 255 255 / 0.07);
+  --dot-grid-size: 6px;
+
+  /* Floating nav bar. */
+  --surface-nav: rgb(78 78 78 / 0.15);
+  --border-nav: rgb(255 255 255 / 0.15);
+  --glow-pill: 0 0 23px 0 rgb(255 241 93 / 0.4);
 
   --shadow-badge: 0 5px 20px 0 rgb(0 0 0 / 0.41);
   --shadow-badge-inset: inset 0 0 8px 0 rgb(255 255 255 / 0.03);

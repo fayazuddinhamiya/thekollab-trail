@@ -1,0 +1,188 @@
+/*
+ * SiteHeader — BEM within a CSS Module.
+ * No literal colour values; everything resolves through styles/tokens.css.
+ */
+
+.siteHeader {
+  position: absolute;
+  inset-block-start: var(--space-lg);
+  inset-inline: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  padding-inline: var(--space-md);
+  pointer-events: none;
+}
+
+.siteHeader__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  padding: var(--space-2xs) var(--space-2xs) var(--space-2xs) var(--space-sm);
+  border: var(--border-width) solid var(--border-nav);
+  border-radius: var(--radius-xl);
+  background-color: var(--surface-nav);
+  backdrop-filter: blur(20px);
+  pointer-events: auto;
+}
+
+/* ---------------------------------------------------------------------
+ * Brand
+ * ------------------------------------------------------------------ */
+
+.siteHeader__brand {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--space-2xs);
+}
+
+.siteHeader__logoMark {
+  inline-size: 38px;
+  block-size: auto;
+}
+
+.siteHeader__logoWordmark {
+  inline-size: 77px;
+  block-size: auto;
+}
+
+/* ---------------------------------------------------------------------
+ * Links
+ * ------------------------------------------------------------------ */
+
+.siteHeader__links {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.siteHeader__linkItem {
+  display: flex;
+  align-items: center;
+}
+
+.siteHeader__link {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem; /* 11px */
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+@media (hover: hover) {
+  .siteHeader__link:hover {
+    color: var(--text-primary);
+  }
+}
+
+/* Current page: full-strength label preceded by the caret from the design. */
+.siteHeader__link--current {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  color: var(--text-primary);
+}
+
+.siteHeader__link--current::before {
+  content: "";
+  flex: none;
+  inline-size: 0;
+  block-size: 0;
+  border-block: 3.5px solid transparent;
+  border-inline-start: 6px solid currentColor;
+}
+
+/* ---------------------------------------------------------------------
+ * Actions
+ * ------------------------------------------------------------------ */
+
+.siteHeader__actions {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--space-2xs);
+}
+
+.siteHeader__iconLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 40px;
+  block-size: 40px;
+  border: var(--border-width) solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  transition: background-color var(--duration-fast) var(--ease-standard);
+}
+
+@media (hover: hover) {
+  .siteHeader__iconLink:hover {
+    background-color: var(--surface-raised);
+  }
+}
+
+.siteHeader__iconLinkGlyph {
+  inline-size: 18px;
+  block-size: 18px;
+}
+
+.siteHeader__cta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  padding: var(--space-3xs) 14px var(--space-3xs) var(--space-3xs);
+  border-radius: 11px;
+  background-color: var(--color-accent-pill);
+  box-shadow: var(--glow-pill);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: 0.875rem; /* 14px */
+  font-weight: var(--font-weight-medium);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  transition: transform var(--duration-fast) var(--ease-standard);
+}
+
+@media (hover: hover) {
+  .siteHeader__cta:hover {
+    transform: translateY(-1px);
+  }
+}
+
+.siteHeader__ctaGlyph {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  inline-size: 34px;
+  block-size: 32px;
+  border-radius: var(--radius-md);
+  background-color: var(--surface-on-accent);
+  color: var(--color-ink);
+}
+
+/* ---------------------------------------------------------------------
+ * Narrow viewports
+ *
+ * The Figma frame only describes the desktop bar. Below the breakpoint the
+ * link list is dropped rather than invented as a burger menu that has no
+ * design — brand and the two actions stay.
+ * ------------------------------------------------------------------ */
+
+@media (max-width: 63.999rem) {
+  .siteHeader__links {
+    display: none;
+  }
+}
+
+@media (max-width: 30rem) {
+  .siteHeader__logoWordmark {
+    display: none;
+  }
+}

@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import ServicesGridMotion from "./ServicesGridMotion";
+import StarBadgeIcon from "./StarBadgeIcon";
 import styles from "./ServicesGrid.module.css";
 import type { HeadingLevel, ServicesGridProps } from "./types";
 
@@ -64,6 +65,19 @@ export default function ServicesGrid({
 
             <Heading id={headingId} className={styles.servicesGrid__heading}>
               {heading}
+              {/* Decorative marks that overlap the heading in the design. */}
+              <span
+                className={styles.servicesGrid__headingDot}
+                aria-hidden="true"
+              />
+              <span
+                className={styles.servicesGrid__headingBadge}
+                aria-hidden="true"
+              >
+                <StarBadgeIcon
+                  className={styles.servicesGrid__headingBadgeIcon}
+                />
+              </span>
             </Heading>
 
             <p className={styles.servicesGrid__intro}>{intro}</p>

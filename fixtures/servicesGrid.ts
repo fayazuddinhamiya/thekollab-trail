@@ -5,20 +5,17 @@ import type { ServicesGridProps } from "@/components/blocks/ServicesGrid";
  * the block's prop contract, so a field renamed in config.ts / types.ts
  * breaks the build here rather than silently rendering nothing.
  *
- * Copy transcribed from the "Our Services" frame (node 681:23419).
+ * Copy transcribed verbatim from the "Our Services" frame (node 681:23419),
+ * including the design's own casing on "Kol rounds" and "Seo & Content
+ * marketing".
  *
- * Two deliberate deviations from the literal Figma text, both noted in the
- * README:
+ * The eyebrow is the one string stored differently from how it appears: the
+ * design renders it uppercase via text-transform rather than storing it that
+ * way, so it lives here as "Our Services" and is uppercased at render.
  *
- * 1. Strings are stored in natural case. The design gets its display casing
- *    from CSS text-transform, not from the stored content — so the eyebrow
- *    lives here as "Our Services" and is uppercased at render.
- *
- * 2. Acronyms keep their capitals. Figma renders "Kol rounds" and "Seo &
- *    Content marketing", but that is a side effect of the lowercase
- *    transform applied over source text that reads "KOL ROUNDS" and "SEO &
- *    CONTENT MARKETING". Mangled acronyms are a rendering artifact rather
- *    than intent, and an editor typing into the CMS would not reproduce it.
+ * Icons are the original transparent uploads from the file rather than the
+ * flattened node exports — the exports arrive pre-composited onto the
+ * section background and cannot sit over a card that changes colour.
  *
  * `cta` is intentionally absent — the source frame has no CTA banner.
  */
@@ -33,8 +30,8 @@ export const servicesGridFixture: ServicesGridProps = {
       icon: {
         url: "/icons/crypto-influencer-marketing.png",
         alt: "",
-        width: 696,
-        height: 658,
+        width: 540,
+        height: 515,
       },
       title: "Crypto influencer marketing",
       body: "We are proven to have the most elite crypto KOL network in the industry – with exclusive access to many of the biggest names.",
@@ -44,8 +41,8 @@ export const servicesGridFixture: ServicesGridProps = {
       icon: {
         url: "/icons/social-media-marketing.png",
         alt: "",
-        width: 411,
-        height: 512,
+        width: 308,
+        height: 384,
       },
       title: "Social media marketing",
       body: "The lifeblood of your crypto project. We create & activate expert growth strategies that drive user interest.",
@@ -55,8 +52,8 @@ export const servicesGridFixture: ServicesGridProps = {
       icon: {
         url: "/icons/public-relations.png",
         alt: "",
-        width: 508,
-        height: 588,
+        width: 381,
+        height: 441,
       },
       title: "Public relations",
       body: "The lifeblood of your crypto project. We create & activate expert growth strategies that drive user interest.",
@@ -66,10 +63,10 @@ export const servicesGridFixture: ServicesGridProps = {
       icon: {
         url: "/icons/kol-rounds.png",
         alt: "",
-        width: 320,
-        height: 526,
+        width: 265,
+        height: 437,
       },
-      title: "KOL rounds",
+      title: "Kol rounds",
       body: "As one of the most renowned KOL onboarding agencies, we have raised over $2.5M+ from KOLs into Presale & OTC investments.",
       link: { label: "Explore", href: "/services/kol-rounds" },
     },
@@ -77,10 +74,10 @@ export const servicesGridFixture: ServicesGridProps = {
       icon: {
         url: "/icons/seo-content-marketing.png",
         alt: "",
-        width: 640,
-        height: 640,
+        width: 480,
+        height: 480,
       },
-      title: "SEO & content marketing",
+      title: "Seo & Content marketing",
       body: "Our analysts and writers will get your crypto content ranking high in the SERPs in order to deliver high-intent organic traffic.",
       link: { label: "Explore", href: "/services/seo-content-marketing" },
     },
@@ -88,8 +85,8 @@ export const servicesGridFixture: ServicesGridProps = {
       icon: {
         url: "/icons/paid-search-social.png",
         alt: "",
-        width: 735,
-        height: 696,
+        width: 551,
+        height: 522,
       },
       title: "Paid search & social",
       body: "Expert strategies designed to convert interest into action. Our paid crypto advertising team optimises campaigns for maximum ROI.",
