@@ -3,13 +3,6 @@ import Link from "next/link";
 import SiteHeaderMotion from "./SiteHeaderMotion";
 import styles from "./SiteHeader.module.css";
 
-/*
- * Floating nav from the top of the "Our Services" frame (node 681:30714).
- * Kept out of the ServicesGrid block, which gets reordered within a page
- * and must not carry site chrome. Server component — labels are in the
- * initial HTML.
- */
-
 interface NavLink {
   label: string;
   href: string;

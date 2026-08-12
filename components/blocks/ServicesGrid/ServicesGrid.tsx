@@ -35,11 +35,6 @@ function nextLevel(level: HeadingLevel): HeadingLevel {
   return Math.min(level + 1, 6) as HeadingLevel;
 }
 
-/**
- * Cuts the heading so the dot lands after the first ampersand and the badge
- * between the final two words, putting both in the text flow instead of
- * over it. Any heading works: no ampersand means no dot, one word no badge.
- */
 function headingParts(heading: string) {
   const words = heading.trim().split(/\s+/);
   const lastWord = words.length > 1 ? words[words.length - 1] : null;

@@ -194,11 +194,6 @@
   pointer-events: none;
 }
 
-/*
- * Corner marks. 3x3 squares in the file, not dots — a circle gradient at a
- * corner clips to a quarter and anti-aliases into a stair-step. Box sits
- * 1px proud, as the frame's 431x489 marker group does on a 430x487 card.
- */
 .servicesGrid__card::after {
   content: "";
   position: absolute;
@@ -344,13 +339,6 @@
   text-wrap: pretty;
 }
 
-/*
- * The artwork is a layer in the frame, not a flow item, which is how the
- * card holds art taller than the space between its copy and link. Space is
- * reserved by a shorter well sized from the card's width; the image is
- * taken out of flow so it can overflow without stretching the flex item
- * that it then measures its own height against.
- */
 .servicesGrid__cardMedia {
   position: relative;
   z-index: 0;
@@ -359,14 +347,6 @@
   margin-block: var(--space-lg);
 }
 
-/*
- * Width per card (iconWidthPercent), height from the image — the six pieces
- * run 160x263 to 367x348, so a shared height distorts them. Anchored at 65%
- * because their vertical centres in the frame all land about two thirds
- * down. Screen blending keeps the near-black dots from punching through the
- * wash behind them; it relies on these being the original transparent
- * uploads rather than the flattened node exports.
- */
 .servicesGrid__cardIcon {
   position: absolute;
   inset-block-start: 65%;

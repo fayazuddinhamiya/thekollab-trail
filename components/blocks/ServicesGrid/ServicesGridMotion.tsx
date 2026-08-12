@@ -14,13 +14,6 @@ interface ServicesGridMotionProps {
   children: React.ReactNode;
 }
 
-/**
- * Renders no copy of its own — it wraps children already rendered on the
- * server, so with JavaScript disabled the block is simply visible.
- *
- * The header runs on load, since a scroll trigger above the fold fires
- * instantly anyway. The cards keep a scroll trigger.
- */
 export default function ServicesGridMotion({
   children,
 }: ServicesGridMotionProps) {
@@ -30,10 +23,6 @@ export default function ServicesGridMotion({
     const root = rootRef.current;
     if (!root) return;
 
-    /*
-     * Under `reduce` this callback never runs, so no from-state is applied
-     * and the layout holds — rather than motion stopping mid-transform.
-     */
     const mm = gsap.matchMedia();
 
     mm.add("(prefers-reduced-motion: no-preference)", () => {
