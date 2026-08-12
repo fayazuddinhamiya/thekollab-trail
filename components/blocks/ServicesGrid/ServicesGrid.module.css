@@ -214,11 +214,14 @@
   display: flex;
   flex-direction: column;
   padding: var(--space-card-padding);
+  /*
+   * Only the column rule shows at rest (added at the breakpoints below).
+   * Top and bottom edges arrive with the full border on the active state.
+   */
   border: var(--border-width) solid transparent;
-  border-block-end-color: var(--border-default);
 
   /*
-   * Square at rest so the dividers read as straight rules; the radius
+   * Square at rest so the column rules read as straight lines; the radius
    * arrives with the full border on the active state.
    */
   border-radius: 0;
@@ -281,11 +284,6 @@
   pointer-events: none;
 }
 
-/* Last card never carries a bottom divider, at any column count. */
-.servicesGrid__card:last-child {
-  border-block-end-color: transparent;
-}
-
 /*
  * Hover and keyboard focus resolve to the same treatment: the divider
  * becomes a full rounded border, matching the "hover" frame in Figma.
@@ -326,11 +324,6 @@
   .servicesGrid__card:nth-child(2n) {
     border-inline-end-color: transparent;
   }
-
-  /* Final row of a two-column layout. */
-  .servicesGrid__card:nth-last-child(-n + 2) {
-    border-block-end-color: transparent;
-  }
 }
 
 @media (min-width: 64rem) {
@@ -345,16 +338,19 @@
   .servicesGrid__card:nth-child(3n) {
     border-inline-end-color: transparent;
   }
-
-  /* Final row of a three-column layout. */
-  .servicesGrid__card:nth-last-child(-n + 3) {
-    border-block-end-color: transparent;
-  }
 }
 
 /* ---------------------------------------------------------------------
  * Card contents
  * ------------------------------------------------------------------ */
+
+/* Copy and link sit above the overflowing artwork layer. */
+.servicesGrid__cardNumber,
+.servicesGrid__cardText,
+.servicesGrid__cardLink {
+  position: relative;
+  z-index: 1;
+}
 
 .servicesGrid__cardNumber {
   margin-block-end: var(--space-md);
@@ -405,22 +401,45 @@
 }
 
 /*
- * Fixed block-size reserves the icon's space before it paints, so longer
- * body copy pushes the icon down as a block instead of reflowing around it,
- * and nothing shifts after load.
+ * In the frame the artwork is a layer, not a flow item: it sits at
+ * x=50 y=157 at 348x332 inside a 432x490 card, overlapping the copy above
+ * it and the link below. So it contributes no height of its own, which is
+ * how the card stays 490 while holding art taller than the space between
+ * them.
+ *
+ * Reproduced by reserving a shorter well and letting the image overflow
+ * it. The well takes its height from the card's own width via
+ * aspect-ratio, so nothing here is a fixed size and the reservation still
+ * happens before paint — no shift after load.
  */
 .servicesGrid__cardMedia {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  block-size: clamp(12rem, 26vw, 20rem);
+  position: relative;
+  z-index: 0;
+
+  /*
+   * flex: none and the absolutely positioned image below keep the well's
+   * height coming from aspect-ratio alone. Left in flow, the oversized
+   * image would stretch the flex item, which the image then measures its
+   * own percentage height against — a loop that resolves far too tall.
+   */
+  flex: none;
+  aspect-ratio: 1.9;
   margin-block: var(--space-lg);
 }
 
+/*
+ * Deliberately taller than its well so it spills over the copy and link,
+ * as the layer does in the frame. Both values are relative, so the art
+ * scales with the card instead of being pinned to the desktop size.
+ */
 .servicesGrid__cardIcon {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  transform: translate(-50%, -50%);
   inline-size: auto;
-  max-inline-size: 100%;
-  block-size: 100%;
+  max-inline-size: 93%;
+  block-size: 170%;
   object-fit: contain;
 
   /*
