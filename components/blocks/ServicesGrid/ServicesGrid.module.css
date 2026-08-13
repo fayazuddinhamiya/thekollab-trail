@@ -112,7 +112,8 @@
   vertical-align: -0.16em;
   inline-size: 42px;
   block-size: 42px;
-  margin-inline: 0.2em;
+  /* Short on the leading side — a real space now sits there. */
+  margin-inline: 0.02em 0.2em;
   transform: rotate(24.57deg);
   border: var(--border-width) solid var(--border-strong);
   border-radius: var(--radius-lg);

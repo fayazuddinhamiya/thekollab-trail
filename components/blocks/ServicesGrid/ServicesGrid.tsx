@@ -89,6 +89,13 @@ export default function ServicesGrid({
               )}
               {lastWord === null ? null : (
                 <>
+                  {/*
+                    A real space, not just the badge's margin — without it the
+                    text reads "MarketingServices" to anything reading the DOM.
+                    Before the badge, so the wrap opportunity falls there and
+                    the badge is never orphaned from the word it precedes.
+                  */}
+                  {" "}
                   <span
                     className={styles.servicesGrid__headingBadge}
                     data-motion="badge"
